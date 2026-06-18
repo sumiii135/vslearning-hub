@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | VS Learning Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:radial-gradient(circle, #0f172a, #020617);color:#f1f5f9;display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;overflow:hidden;perspective:1000px; background-attachment: fixed; position: relative;}
+.login-card{background:rgba(30, 41, 59, 0.7);border-radius:24px;padding:40px;backdrop-filter:blur(15px);width:100%;max-width:400px;box-shadow:0 20px 50px rgba(0,0,0,0.3);border:1px solid rgba(56, 189, 248, 0.2);text-align:center;transform-style:preserve-3d;transition:transform 0.6s ease;transform:rotateY(-5deg) rotateX(5deg); z-index: 5;}
+.login-card:hover{transform:rotateY(0deg) rotateX(0deg); box-shadow: 0 0 40px rgba(56, 189, 248, 0.2);}
+
+/* Flickering Card Animation */
+.flicker { animation: cardFlicker 8s infinite alternate; }
+@keyframes cardFlicker { 0%, 90%, 100% { opacity: 1; filter: brightness(1); } 92%, 96% { opacity: 0.8; filter: brightness(0.5); } 94% { opacity: 0.9; } }
+
+/* Glitch Effect for Title */
+h2{color:#38bdf8;margin-bottom:30px;font-size:3.5rem;font-family: 'Creepster', cursive; transform:translateZ(50px); text-shadow: 0 0 15px rgba(56, 189, 248, 0.4); position: relative; animation: glitch 3s infinite;}
+@keyframes glitch {
+    0% { transform: translate(0) translateZ(50px); }
+    20% { transform: translate(-2px, 2px) translateZ(50px); }
+    40% { transform: translate(-2px, -2px) translateZ(50px); }
+    60% { transform: translate(2px, 2px) translateZ(50px); }
+    80% { transform: translate(2px, -2px) translateZ(50px); }
+    100% { transform: translate(0) translateZ(50px); }
+}
+
+.input-group{margin-bottom:20px;text-align:left}
+.input-group label{display:block;margin-bottom:8px;color:#cbd5e1;font-size:0.9rem}
+.input-group input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.05);color:white;outline:none;transition:0.3s; font-size: 1rem;}
+.input-group input:focus{border-color:#38bdf8;background:rgba(56, 189, 248, 0.05); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);}
+
+.btn{display:block;width:100%;text-decoration:none;background:#38bdf8;color:#0f172a;padding:14px;border-radius:12px;margin-top:20px;font-weight:bold;border:none;cursor:pointer;font-size:1.2rem;transition:all 0.3s; font-family: 'Creepster', cursive;}
+.btn:hover{background:#7dd3fc;transform:translateY(-2px) scale(1.02); box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);}
+
+.pay-btn{display:inline-block; margin-top: 10px; background: transparent; color: #38bdf8; border: 1px solid #38bdf8; padding: 8px 15px; border-radius: 8px; text-decoration: none; font-size: 0.85rem; transition: 0.3s; font-weight: bold;}
+.pay-btn:hover{background: #38bdf8; color: #0f172a;}
+
+/* Floating Background Spirits */
+.spirit {
+    position: absolute;
+    font-size: 2rem;
+    pointer-events: none;
+    opacity: 0.2;
+    filter: blur(1px);
+    animation: floatAround 15s infinite linear;
+    z-index: 1;
+}
+@keyframes floatAround {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.2; }
+    90% { opacity: 0.2; }
+    100% { transform: translate(var(--tx), var(--ty)) rotate(360deg); opacity: 0; }
+}
+
+.back-link{display:inline-block;margin-top:20px;color:#93c5fd;text-decoration:none;font-size:0.9rem;transition:0.3s}
+.back-link:hover{text-decoration:underline;color:#38bdf8}
+.linkedin-link{display:inline-block;margin-top:10px;color:#2278a7;text-decoration:none;font-size:0.9rem;font-weight:bold;transition:0.3s}
+.linkedin-link:hover{color:#dbf838;text-decoration:underline}
+
+/* Shake animation for wrong password */
+.shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+.password-container { position: relative; }
+.toggle-password { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #39ff14; font-size: 0.8rem; opacity: 0.7; }
+.error-msg { color: #ff0000; font-size: 0.8rem; margin-top: 5px; display: none; font-weight: bold; }
+
+/* Daily Quote Styling for Login */
+.quote-display {
+    max-width: 400px;
+    margin-bottom: 25px;
+    padding: 15px 25px;
+    background: rgba(57, 255, 20, 0.03);
+    border: 1px solid rgba(57, 255, 20, 0.15);
+    border-radius: 15px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+#motivational-quote {
+    color: #39ff14;
+    font-style: italic;
+    font-size: 1rem;
+    text-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
+    line-height: 1.4;
+}
+</style>
+</head>
+<body>
+<div class="quote-display">
+    <p id="motivational-quote">"Atmaein aapke liye prerna dhoond rahi hain..."</p>
+</div>
+<div class="login-card flicker" id="card">
+    <h2>Login</h2>
+    <form id="loginForm">
+        <div class="input-group">
+            <label for="identifier">Username or Email</label>
+            <input type="text" id="identifier" placeholder="Enter username or email" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <div class="password-container">
+                <input type="password" id="password" placeholder="••••••••" required>
+                <span class="toggle-password" id="togglePassword">SHOW</span>
+            </div>
+            <p id="errorBox" class="error-msg">❌ Galat Password! Atmaein gussa hain.</p>
+        </div>
+        <button type="submit" class="btn">Sign In</button>
+    </form>
+    <p style="margin-top: 15px; font-size: 0.85rem; color: #94a3b8;">
+        Don't have an account? <a href="#" style="color: #38bdf8; text-decoration: none;">Sign up</a>
+    </p>
+    <a href="index.html" class="back-link">← Back to Hub</a>
+    <br>
+    <a href="https://www.linkedin.com/in/sumit-pandey-93595b387" target="_blank" class="linkedin-link">🔗 Connect on LinkedIn</a>
+</div>
+
+<script>
+// Floating Spirits Generator
+function createSpirits() {
+    const emojis = ['👻', '💀', '🦇', '🕯️', '🕷️'];
+    for(let i=0; i<12; i++) {
+        const spirit = document.createElement('div');
+        spirit.className = 'spirit';
+        spirit.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        spirit.style.left = Math.random() * 100 + 'vw';
+        spirit.style.top = Math.random() * 100 + 'vh';
+        spirit.style.setProperty('--tx', (Math.random() - 0.5) * 500 + 'px');
+        spirit.style.setProperty('--ty', (Math.random() - 0.5) * 500 + 'px');
+        spirit.style.animationDelay = Math.random() * 10 + 's';
+        document.body.appendChild(spirit);
+    }
+}
+createSpirits();
+
+// Creepy Button Interaction
+const loginBtn = document.querySelector('.btn');
+loginBtn.addEventListener('mouseenter', () => { if(loginBtn.innerText.indexOf("VOID") === -1) loginBtn.innerText = "GIVE YOUR SOUL? 😈"; });
+loginBtn.addEventListener('mouseleave', () => { if(loginBtn.innerText.indexOf("VOID") === -1) loginBtn.innerText = "Sign In"; });
+
+// Password Toggle Logic
+const togglePassword = document.querySelector('#togglePassword');
+const password = document.querySelector('#password');
+
+togglePassword.addEventListener('click', function (e) {
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    this.textContent = type === 'password' ? 'SHOW' : 'HIDE';
+});
+
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const card = document.getElementById('card');
+    const errorBox = document.getElementById('errorBox');
+    const passwordInput = document.getElementById('password').value;
+
+    if(passwordInput === '25082005') {
+        errorBox.style.display = 'none';
+
+        // Button ka hulia badlo excitement ke liye
+        const btn = e.target.querySelector('.btn');
+        btn.innerText = "ENTERING THE VOID... 👻";
+        btn.style.background = "#38bdf8";
+        btn.style.boxShadow = "0 0 30px #ff0000";
+
+        let redirected = false;
+        let speechTimeout; // Timeout variable declare kiya
+
+        const performRedirect = () => {
+            if (!redirected) {
+                redirected = true;
+                clearTimeout(speechTimeout); // Agar speech poori ho gayi toh fallback timeout ko clear karo
+                window.location.href = 'index.html';
+            }
+        };
+
+        if (window.speechSynthesis && window.SpeechSynthesisUtterance) {
+            window.speechSynthesis.cancel(); // Purani koi bhi speech ko roko
+
+            const msg = new SpeechSynthesisUtterance("Welcome to Sumit's Learning Hub. Access Granted.");
+            
+            // Behtar clarity ke liye voice selection
+            const voices = window.speechSynthesis.getVoices();
+            msg.voice = voices.find(v => v.name.includes('Google') && v.lang.startsWith('en')) || voices[0];
+            msg.pitch = 1.1; // Slightly higher for better clarity
+            msg.rate = 0.95; // Slightly slower for better understanding
+            msg.volume = 1;  // Full volume (Max limit is 1.0)
+            msg.lang = 'en-US';
+
+            msg.onend = function() {
+                performRedirect(); // Awaaz poori hone par redirect karo
+            };
+
+            window.speechSynthesis.speak(msg);
+
+            // Fallback timeout: Agar speech onend event fire na kare toh 5 seconds baad redirect karo
+            speechTimeout = setTimeout(() => {
+                performRedirect();
+            }, 5000); // 5 seconds ka generous time diya gaya hai
+        } else {
+            // Agar Speech Synthesis support nahi hai toh seedhe redirect karo
+            performRedirect();
+        }
+    } else {
+        // Shake effect and inline error instead of alert
+        errorBox.style.display = 'block';
+        card.classList.add('shake');
+        setTimeout(() => {
+            card.classList.remove('shake');
+        }, 500);
+    }
+});
+
+// Daily Motivational Quotes Logic
+const quotes = [
+    "Safar lamba hai par hosla buland rakh! 🚀",
+    "Aaj ki mehnat, kal ki kamyabi hai. ✨",
+    "Don't stop until you're proud. 🔥",
+    "Padhai kar le beta, yahi mauka hai! 📖",
+    "Impossible is just an opinion. 👻",
+    "Success doesn't come to you, you go to it. 💪",
+    "Small steps lead to big results. 🎯",
+    "Consistency is the key to success. 🔑",
+    "Believe in yourself and you're halfway there. 🌟",
+    "Your only limit is your mind. 🧠"
+];
+
+const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+document.getElementById('motivational-quote').innerText = quotes[dayOfYear % quotes.length];
+</script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #020617;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(57, 255, 20, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(176, 38, 255, 0.05) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(56, 189, 248, 0.05) 0px, transparent 50%);
+    color: white;
+    min-height: 100vh;
+    perspective: 1000px;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar for Premium Feel */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #020617; }
+::-webkit-scrollbar-thumb { 
+    background: linear-gradient(to bottom, #39ff14, #b026ff); 
+    border-radius: 10px; 
+}
+
+header {
+    text-align: center;
+    padding: 40px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.logo {
+    width: 110px;
+    height: 110px;
+    margin: auto;
+    border-radius: 50%;
+    background: transparent;
+    border: 3px solid #39ff14;
+    color: #39ff14;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 42px;
+    font-weight: bold;
+    box-shadow: 0 0 20px #39ff14;
+    transform: translateZ(50px) rotateZ(-5deg);
+}
+
+.container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.subjects {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    perspective: 1500px;
+}
+
+.card {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 25px;
+    backdrop-filter: blur(16px);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s ease;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.card:hover {
+    transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+    box-shadow: 0 0 30px rgba(57, 255, 20, 0.4);
+}
+
+.card h1, .card h2 {
+    color: #b026ff;
+    font-family: 'Creepster', cursive;
+    font-size: 2rem;
+    margin-bottom: 18px;
+    text-align: center;
+    transform: translateZ(40px);
+}
+
+.description {
+    color: #cbd5e1;
+    margin-bottom: 25px;
+    line-height: 1.8;
+}
+
+.unit {
+    background: rgba(51, 65, 85, 0.4);
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: 0.3s;
+}
+
+.unit:hover { background: rgba(56, 189, 248, 0.15); transform: scale(1.02); }
+
+.unit-link {
+    display: block;
+    text-decoration: none;
+    color: white;
+}
+
+.unit-link:hover {
+    background: #2563eb;
+}
+
+.btn {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background: #39ff14;
+    color: black;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 15px;
+    font-weight: bold;
+    font-family: 'Creepster', cursive;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #32e012;
+    box-shadow: 0 0 15px #39ff14;
+}
+
+/* Premium Section Titles for Unit Pages */
+.section-title {
+    background: linear-gradient(90deg, rgba(56, 189, 248, 0.2), transparent);
+    padding: 12px 16px;
+    border-radius: 12px;
+    margin: 30px 0 15px;
+    font-weight: 700;
+    color: #38bdf8;
+    border-left: 4px solid #38bdf8;
+    font-size: 1.2rem;
+}
+
+h1 {
+    font-family: 'Creepster', cursive;
+    font-size: 4rem;
+    color: #39ff14;
+    text-shadow: 0 0 10px #39ff14;
+    animation: flicker 4s infinite;
+}
+
+/* Haunted Animations */
+@keyframes flicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+    20%, 24%, 55% { opacity: 0.4; }
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.vibrate:hover {
+    animation: shake 0.2s infinite;
+}
+
+/* Fog Effect */
+.fog-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: url('https://raw.githubusercontent.com/swarnim-p/ghost-assets/main/fog.png');
+    background-repeat: repeat-x;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 1000;
+    animation: fogMove 30s linear infinite;
+}
+
+@keyframes fogMove {
+    from { background-position: 0 0; }
+    to { background-position: 1000px 0; }
+}
+
+/* Floating Ghost */
+.ghost {
+    position: fixed;
+    font-size: 3rem;
+    opacity: 0.3;
+    pointer-events: none;
+    animation: floatGhost 15s infinite ease-in-out;
+}
+@keyframes floatGhost {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(100vw, -50vh) rotate(20deg); }
+}
+
+.video-wrapper { position: relative; width: 100%; padding-top: 56.25%; border-radius: 16px; overflow: hidden; margin-top: 15px; background: #000; }
+.video-frame { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+.note { color: #cbd5e1; margin-top: 12px; font-size: 0.95rem; }
+
+/* Ghost AI Chat Widget */
+.ai-launcher {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 65px;
+    height: 65px;
+    background: #39ff14;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    cursor: pointer;
+    box-shadow: 0 0 20px #39ff14;
+    z-index: 2001;
+    transition: 0.4s;
+    border: none;
+}
+.ai-launcher:hover { transform: scale(1.1) rotate(15deg); }
+
+.chat-box {
+    position: fixed;
+    bottom: 110px;
+    right: 30px;
+    width: 320px;
+    height: 450px;
+    background: rgba(10, 5, 15, 0.95);
+    border: 2px solid #39ff14;
+    border-radius: 20px;
+    display: none;
+    flex-direction: column;
+    z-index: 2000;
+    box-shadow: 0 0 40px rgba(57, 255, 20, 0.3);
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+}
+
+.chat-header {
+    padding: 15px;
+    background: rgba(57, 255, 20, 0.1);
+    color: #39ff14;
+    font-family: 'Creepster', cursive;
+    text-align: center;
+    border-bottom: 1px solid rgba(57, 255, 20, 0.3);
+}
+
+.chat-logs {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+.msg { padding: 10px 14px; border-radius: 12px; max-width: 85%; line-height: 1.4; }
+.bot { background: rgba(176, 38, 255, 0.2); border: 1px solid #b026ff; align-self: flex-start; }
+.user { background: rgba(57, 255, 20, 0.1); border: 1px solid #39ff14; align-self: flex-end; }
+
+.chat-input {
+    padding: 15px;
+    display: flex;
+    gap: 8px;
+    background: rgba(0,0,0,0.3);
+}
+.chat-input input {
+    flex: 1; background: transparent; border: 1px solid #39ff14; 
+    padding: 8px; border-radius: 8px; color: white; outline: none;
+}
+
+/* Daily Quote Styling */
+.quote-display {
+    max-width: 650px;
+    margin: 25px auto;
+    padding: 15px 25px;
+    background: rgba(57, 255, 20, 0.03);
+    border: 1px solid rgba(57, 255, 20, 0.15);
+    border-radius: 15px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+#motivational-quote {
+    color: #39ff14;
+    font-style: italic;
+    font-size: 1.1rem;
+    text-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
+    line-height: 1.4;
+}
