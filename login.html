@@ -108,133 +108,17 @@ h2{color:#38bdf8;margin-bottom:30px;font-size:3.5rem;font-family: 'Creepster', c
         <div class="input-group">
             <label for="password">Password</label>
             <div class="password-container">
-                <input type="password" id="password" placeholder="••••••••" required>
+                <input type="password" id="password" placeholder="••••••••" required data-correct-password="25082005">
                 <span class="toggle-password" id="togglePassword">SHOW</span>
             </div>
             <p id="errorBox" class="error-msg">❌ Galat Password! Atmaein gussa hain.</p>
         </div>
         <button type="submit" class="btn">Sign In</button>
     </form>
-    <p style="margin-top: 15px; font-size: 0.85rem; color: #94a3b8;">
-        Don't have an account? <a href="#" style="color: #38bdf8; text-decoration: none;">Sign up</a>
-    </p>
-    <a href="index.html" class="back-link">← Back to Hub</a>
     <br>
     <a href="https://www.linkedin.com/in/sumit-pandey-93595b387" target="_blank" class="linkedin-link">🔗 Connect on LinkedIn</a>
 </div>
 
-<script>
-// Floating Spirits Generator
-function createSpirits() {
-    const emojis = ['👻', '💀', '🦇', '🕯️', '🕷️'];
-    for(let i=0; i<12; i++) {
-        const spirit = document.createElement('div');
-        spirit.className = 'spirit';
-        spirit.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        spirit.style.left = Math.random() * 100 + 'vw';
-        spirit.style.top = Math.random() * 100 + 'vh';
-        spirit.style.setProperty('--tx', (Math.random() - 0.5) * 500 + 'px');
-        spirit.style.setProperty('--ty', (Math.random() - 0.5) * 500 + 'px');
-        spirit.style.animationDelay = Math.random() * 10 + 's';
-        document.body.appendChild(spirit);
-    }
-}
-createSpirits();
-
-// Creepy Button Interaction
-const loginBtn = document.querySelector('.btn');
-loginBtn.addEventListener('mouseenter', () => { if(loginBtn.innerText.indexOf("VOID") === -1) loginBtn.innerText = "GIVE YOUR SOUL? 😈"; });
-loginBtn.addEventListener('mouseleave', () => { if(loginBtn.innerText.indexOf("VOID") === -1) loginBtn.innerText = "Sign In"; });
-
-// Password Toggle Logic
-const togglePassword = document.querySelector('#togglePassword');
-const password = document.querySelector('#password');
-
-togglePassword.addEventListener('click', function (e) {
-    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-    password.setAttribute('type', type);
-    this.textContent = type === 'password' ? 'SHOW' : 'HIDE';
-});
-
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const card = document.getElementById('card');
-    const errorBox = document.getElementById('errorBox');
-    const passwordInput = document.getElementById('password').value;
-
-    if(passwordInput === '25082005') {
-        errorBox.style.display = 'none';
-
-        // Button ka hulia badlo excitement ke liye
-        const btn = e.target.querySelector('.btn');
-        btn.innerText = "ENTERING THE VOID... 👻";
-        btn.style.background = "#38bdf8";
-        btn.style.boxShadow = "0 0 30px #ff0000";
-
-        let redirected = false;
-        let speechTimeout; // Timeout variable declare kiya
-
-        const performRedirect = () => {
-            if (!redirected) {
-                redirected = true;
-                clearTimeout(speechTimeout); // Agar speech poori ho gayi toh fallback timeout ko clear karo
-                window.location.href = 'index.html';
-            }
-        };
-
-        if (window.speechSynthesis && window.SpeechSynthesisUtterance) {
-            window.speechSynthesis.cancel(); // Purani koi bhi speech ko roko
-
-            const msg = new SpeechSynthesisUtterance("Welcome to Sumit's Learning Hub. Access Granted.");
-            
-            // Behtar clarity ke liye voice selection
-            const voices = window.speechSynthesis.getVoices();
-            msg.voice = voices.find(v => v.name.includes('Google') && v.lang.startsWith('en')) || voices[0];
-            msg.pitch = 1.1; // Slightly higher for better clarity
-            msg.rate = 0.95; // Slightly slower for better understanding
-            msg.volume = 1;  // Full volume (Max limit is 1.0)
-            msg.lang = 'en-US';
-
-            msg.onend = function() {
-                performRedirect(); // Awaaz poori hone par redirect karo
-            };
-
-            window.speechSynthesis.speak(msg);
-
-            // Fallback timeout: Agar speech onend event fire na kare toh 5 seconds baad redirect karo
-            speechTimeout = setTimeout(() => {
-                performRedirect();
-            }, 5000); // 5 seconds ka generous time diya gaya hai
-        } else {
-            // Agar Speech Synthesis support nahi hai toh seedhe redirect karo
-            performRedirect();
-        }
-    } else {
-        // Shake effect and inline error instead of alert
-        errorBox.style.display = 'block';
-        card.classList.add('shake');
-        setTimeout(() => {
-            card.classList.remove('shake');
-        }, 500);
-    }
-});
-
-// Daily Motivational Quotes Logic
-const quotes = [
-    "Safar lamba hai par hosla buland rakh! 🚀",
-    "Aaj ki mehnat, kal ki kamyabi hai. ✨",
-    "Don't stop until you're proud. 🔥",
-    "Padhai kar le beta, yahi mauka hai! 📖",
-    "Impossible is just an opinion. 👻",
-    "Success doesn't come to you, you go to it. 💪",
-    "Small steps lead to big results. 🎯",
-    "Consistency is the key to success. 🔑",
-    "Believe in yourself and you're halfway there. 🌟",
-    "Your only limit is your mind. 🧠"
-];
-
-const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-document.getElementById('motivational-quote').innerText = quotes[dayOfYear % quotes.length];
-</script>
+<script src="login.js"></script>
 </body>
 </html>
