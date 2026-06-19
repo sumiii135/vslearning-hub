@@ -197,32 +197,7 @@ e.preventDefault();
 let password =
 document.getElementById("password").value;
 
-if(password==="25082005"){
-
-// Voice Welcome
-let speech =
-new SpeechSynthesisUtterance(
-"Welcome to V S Learning Hub"
-);
-
-speech.rate=1;
-speech.pitch=1;
-speech.volume=1;
-
-window.speechSynthesis.speak(speech);
-
-// Hide Login
-document.getElementById("loginBox")
-.style.display="none";
-
-// Show Dashboard
-document.getElementById("dashboard")
-.style.display="flex";
-
-}else{
-
-document.getElementById("error")
-.style.display="block";
+if(password==="25082005")
 
 }
 
