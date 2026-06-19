@@ -3,122 +3,232 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login | VS Learning Hub</title>
-<link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+<title>VS Learning Hub</title>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-body{background:radial-gradient(circle, #0f172a, #020617);color:#f1f5f9;display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;overflow:hidden;perspective:1000px; background-attachment: fixed; position: relative;}
-.login-card{background:rgba(30, 41, 59, 0.7);border-radius:24px;padding:40px;backdrop-filter:blur(15px);width:100%;max-width:400px;box-shadow:0 20px 50px rgba(0,0,0,0.3);border:1px solid rgba(56, 189, 248, 0.2);text-align:center;transform-style:preserve-3d;transition:transform 0.6s ease;transform:rotateY(-5deg) rotateX(5deg); z-index: 5;}
-.login-card:hover{transform:rotateY(0deg) rotateX(0deg); box-shadow: 0 0 40px rgba(56, 189, 248, 0.2);}
-
-/* Flickering Card Animation */
-.flicker { animation: cardFlicker 8s infinite alternate; }
-@keyframes cardFlicker { 0%, 90%, 100% { opacity: 1; filter: brightness(1); } 92%, 96% { opacity: 0.8; filter: brightness(0.5); } 94% { opacity: 0.9; } }
-
-/* Glitch Effect for Title */
-h2{color:#38bdf8;margin-bottom:30px;font-size:3.5rem;font-family: 'Creepster', cursive; transform:translateZ(50px); text-shadow: 0 0 15px rgba(56, 189, 248, 0.4); position: relative; animation: glitch 3s infinite;}
-@keyframes glitch {
-    0% { transform: translate(0) translateZ(50px); }
-    20% { transform: translate(-2px, 2px) translateZ(50px); }
-    40% { transform: translate(-2px, -2px) translateZ(50px); }
-    60% { transform: translate(2px, 2px) translateZ(50px); }
-    80% { transform: translate(2px, -2px) translateZ(50px); }
-    100% { transform: translate(0) translateZ(50px); }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
 }
 
-.input-group{margin-bottom:20px;text-align:left}
-.input-group label{display:block;margin-bottom:8px;color:#cbd5e1;font-size:0.9rem}
-.input-group input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.05);color:white;outline:none;transition:0.3s; font-size: 1rem;}
-.input-group input:focus{border-color:#38bdf8;background:rgba(56, 189, 248, 0.05); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);}
-
-.btn{display:block;width:100%;text-decoration:none;background:#38bdf8;color:#0f172a;padding:14px;border-radius:12px;margin-top:20px;font-weight:bold;border:none;cursor:pointer;font-size:1.2rem;transition:all 0.3s; font-family: 'Creepster', cursive;}
-.btn:hover{background:#7dd3fc;transform:translateY(-2px) scale(1.02); box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);}
-
-.pay-btn{display:inline-block; margin-top: 10px; background: transparent; color: #38bdf8; border: 1px solid #38bdf8; padding: 8px 15px; border-radius: 8px; text-decoration: none; font-size: 0.85rem; transition: 0.3s; font-weight: bold;}
-.pay-btn:hover{background: #38bdf8; color: #0f172a;}
-
-/* Floating Background Spirits */
-.spirit {
-    position: absolute;
-    font-size: 2rem;
-    pointer-events: none;
-    opacity: 0.2;
-    filter: blur(1px);
-    animation: floatAround 15s infinite linear;
-    z-index: 1;
-}
-@keyframes floatAround {
-    0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
-    10% { opacity: 0.2; }
-    90% { opacity: 0.2; }
-    100% { transform: translate(var(--tx), var(--ty)) rotate(360deg); opacity: 0; }
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#000000,#12001f,#000000);
+    overflow:hidden;
 }
 
-.back-link{display:inline-block;margin-top:20px;color:#93c5fd;text-decoration:none;font-size:0.9rem;transition:0.3s}
-.back-link:hover{text-decoration:underline;color:#38bdf8}
-.linkedin-link{display:inline-block;margin-top:10px;color:#2278a7;text-decoration:none;font-size:0.9rem;font-weight:bold;transition:0.3s}
-.linkedin-link:hover{color:#dbf838;text-decoration:underline}
-
-/* Shake animation for wrong password */
-.shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
-@keyframes shake {
-    10%, 90% { transform: translate3d(-1px, 0, 0); }
-    20%, 80% { transform: translate3d(2px, 0, 0); }
-    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-    40%, 60% { transform: translate3d(4px, 0, 0); }
+/* Animated Background */
+body::before{
+    content:'';
+    position:absolute;
+    width:200%;
+    height:200%;
+    background:
+    radial-gradient(circle,#8a2be220 1px,transparent 1px);
+    background-size:40px 40px;
+    animation:moveBg 20s linear infinite;
 }
 
-.password-container { position: relative; }
-.toggle-password { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #39ff14; font-size: 0.8rem; opacity: 0.7; }
-.error-msg { color: #ff0000; font-size: 0.8rem; margin-top: 5px; display: none; font-weight: bold; }
-
-/* Daily Quote Styling for Login */
-.quote-display {
-    max-width: 400px;
-    margin-bottom: 25px;
-    padding: 15px 25px;
-    background: rgba(57, 255, 20, 0.03);
-    border: 1px solid rgba(57, 255, 20, 0.15);
-    border-radius: 15px;
-    text-align: center;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    z-index: 10;
+@keyframes moveBg{
+    from{transform:translate(0,0);}
+    to{transform:translate(-200px,-200px);}
 }
-#motivational-quote {
-    color: #39ff14;
-    font-style: italic;
-    font-size: 1rem;
-    text-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
-    line-height: 1.4;
+
+.login-box{
+    position:relative;
+    z-index:10;
+    width:380px;
+    padding:40px;
+    background:rgba(0,0,0,.75);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 0 30px #8a2be2;
+}
+
+.ghost{
+    font-size:60px;
+    animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-15px);}
+}
+
+.logo{
+    color:#fff;
+    font-size:32px;
+    font-weight:bold;
+    margin-top:10px;
+    text-shadow:
+    0 0 10px #8a2be2,
+    0 0 20px #8a2be2;
+}
+
+.tagline{
+    color:#bbb;
+    margin:15px 0 25px;
+}
+
+.input-box{
+    margin:12px 0;
+}
+
+.input-box input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#111;
+    color:white;
+    outline:none;
+}
+
+.input-box input:focus{
+    box-shadow:0 0 10px #8a2be2;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    border:none;
+    border-radius:10px;
+    background:#8a2be2;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.03);
+    box-shadow:0 0 20px #8a2be2;
+}
+
+#error{
+    color:#ff4d4d;
+    margin-top:10px;
+    display:none;
+}
+
+/* Dashboard */
+#dashboard{
+    display:none;
+    position:absolute;
+    inset:0;
+    background:#050505;
+    color:white;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+}
+
+#dashboard h1{
+    font-size:45px;
+    text-shadow:0 0 15px #8a2be2;
+}
+
+#dashboard p{
+    margin-top:10px;
+    color:#ccc;
 }
 </style>
 </head>
+
 <body>
-<div class="quote-display">
-    <p id="motivational-quote">"Atmaein aapke liye prerna dhoond rahi hain..."</p>
-</div>
-<div class="login-card flicker" id="card">
-    <h2>Login</h2>
-    <form id="loginForm">
-        <div class="input-group">
-            <label for="identifier">Username or Email</label>
-            <input type="text" id="identifier" placeholder="Enter username or email" required>
+
+<div class="login-box" id="loginBox">
+
+    <div class="ghost">👻</div>
+
+    <div class="logo">VS Learning Hub</div>
+
+    <div class="tagline">
+        Enter The World Of Knowledge
+    </div>
+
+    <form onsubmit="login(event)">
+
+        <div class="input-box">
+            <input type="email"
+            id="email"
+            placeholder="Enter Email"
+            required>
         </div>
-        <div class="input-group">
-            <label for="password">Password</label>
-            <div class="password-container">
-                <input type="password" id="password" placeholder="••••••••" required data-correct-password="25082005">
-                <span class="toggle-password" id="togglePassword">SHOW</span>
-            </div>
-            <p id="errorBox" class="error-msg">❌ Galat Password! Atmaein gussa hain.</p>
+
+        <div class="input-box">
+            <input type="password"
+            id="password"
+            placeholder="Enter Password"
+            required>
         </div>
-        <button type="submit" class="btn">Sign In</button>
+
+        <button type="submit">
+            👻 Enter Hub
+        </button>
+
+        <div id="error">
+            Wrong Password!
+        </div>
+
     </form>
-    <br>
-    <a href="https://www.linkedin.com/in/sumit-pandey-93595b387" target="_blank" class="linkedin-link">🔗 Connect on LinkedIn</a>
+
 </div>
 
-<script src="login.js"></script>
+<div id="dashboard">
+    <h1>📚 VS Learning Hub</h1>
+    <p>Knowledge Never Sleeps...</p>
+</div>
+
+<script>
+
+function login(e){
+
+e.preventDefault();
+
+let password =
+document.getElementById("password").value;
+
+if(password==="25082005"){
+
+// Voice Welcome
+let speech =
+new SpeechSynthesisUtterance(
+"Welcome to V S Learning Hub"
+);
+
+speech.rate=1;
+speech.pitch=1;
+speech.volume=1;
+
+window.speechSynthesis.speak(speech);
+
+// Hide Login
+document.getElementById("loginBox")
+.style.display="none";
+
+// Show Dashboard
+document.getElementById("dashboard")
+.style.display="flex";
+
+}else{
+
+document.getElementById("error")
+.style.display="block";
+
+}
+
+}
+
+</script>
+
 </body>
 </html>
