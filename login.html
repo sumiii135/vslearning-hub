@@ -1,209 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VS Learning Hub</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VS Learning Hub – Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
+    :root {
+      --black:      #0a0a0f;
+      --deep:       #110d1a;
+      --card:       #16101f;
+      --border:     #3a1f5a;
+      --purple:     #7b2fff;
+      --glow:       #b36aff;
+      --blood:      #c0392b;
+      --fog:        #d4b8f0;
+      --white:      #f0e6ff;
+      --muted:      #8a7a9e;
+    }
 
-body{
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#000000,#12001f,#000000);
-    overflow:hidden;
-}
+    html, body {
+      height: 100%;
+      background: var(--black);
+      font-family: 'Raleway', sans-serif;
+      color: var(--white);
+      overflow: hidden;
+    }
 
-/* Animated Background */
-body::before{
-    content:'';
-    position:absolute;
-    width:200%;
-    height:200%;
-    background:
-    radial-gradient(circle,#8a2be220 1px,transparent 1px);
-    background-size:40px 40px;
-    animation:moveBg 20s linear infinite;
-}
+    /* ── Animated background ── */
+    .bg {
+      position: fixed; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse at 50% 0%, #1e0a3c 0%, var(--black) 70%);
+      overflow: hidden;
+    }
 
-@keyframes moveBg{
-    from{transform:translate(0,0);}
-    to{transform:translate(-200px,-200px);}
-}
+    /* Stars */
+    .stars { position: absolute; inset: 0; }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: #fff;
+      animation: twinkle var(--d) ease-in-out infinite alternate;
+    }
+    @keyframes twinkle { from { opacity: 0.1; } to { opacity: 0.9; } }
 
-.login-box{
-    position:relative;
-    z-index:10;
-    width:380px;
-    padding:40px;
-    background:rgba(0,0,0,.75);
-    backdrop-filter:blur(10px);
-    border-radius:20px;
-    text-align:center;
-    box-shadow:0 0 30px #8a2be2;
-}
+    /* Floating bats */
+    .bat {
+      position: absolute;
+      font-size: 1.4rem;
+      opacity: 0.7;
+      animation: fly var(--fd) linear infinite;
+    }
+    @keyframes fly {
+      0%   { transform: translateX(-80px) translateY(0px) scaleX(1); }
+      49%  { transform: translateX(110vw) translateY(var(--fy)) scaleX(1); }
+      50%  { transform: translateX(110vw) translateY(var(--fy)) scaleX(-1); opacity: 0; }
+      51%  { transform: translateX(110vw) translateY(var(--fy)) scaleX(-1); opacity: 0.7; }
+      100% { transform: translateX(-80px) translateY(0px) scaleX(-1); }
+    }
 
-.ghost{
-    font-size:60px;
-    animation:float 3s ease-in-out infinite;
-}
+    /* Fog layers */
+    .fog-layer {
+      position: absolute;
+      bottom: 0; left: -100%;
+      width: 300%; height: 180px;
+      background: linear-gradient(to top, rgba(75,0,130,0.25), transparent);
+      border-radius: 50% 50% 0 0 / 60px;
+      animation: driftFog var(--ff) ease-in-out infinite alternate;
+    }
+    @keyframes driftFog { from { transform: translateX(0); } to { transform: translateX(15%); } }
 
-@keyframes float{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-15px);}
-}
+    /* Pumpkin glow orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      animation: pulse var(--pd) ease-in-out infinite alternate;
+    }
+    @keyframes pulse { from { opacity: 0.18; } to { opacity: 0.45; } }
 
-.logo{
-    color:#fff;
-    font-size:32px;
-    font-weight:bold;
-    margin-top:10px;
-    text-shadow:
-    0 0 10px #8a2be2,
-    0 0 20px #8a2be2;
-}
+    /* ── Card ── */
+    .wrapper {
+      position: relative; z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
 
-.tagline{
-    color:#bbb;
-    margin:15px 0 25px;
-}
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.6rem 2.8rem 2.4rem;
+      width: 100%; max-width: 400px;
+      box-shadow:
+        0 0 40px rgba(123,47,255,0.25),
+        0 0 80px rgba(123,47,255,0.08),
+        inset 0 0 30px rgba(0,0,0,0.5);
+      animation: cardGlow 4s ease-in-out infinite alternate;
+    }
+    @keyframes cardGlow {
+      from { box-shadow: 0 0 40px rgba(123,47,255,0.2), 0 0 80px rgba(123,47,255,0.06), inset 0 0 30px rgba(0,0,0,0.5); }
+      to   { box-shadow: 0 0 55px rgba(179,106,255,0.35), 0 0 110px rgba(123,47,255,0.14), inset 0 0 30px rgba(0,0,0,0.5); }
+    }
 
-.input-box{
-    margin:12px 0;
-}
+    /* Top skull icon */
+    .skull-wrap {
+      text-align: center;
+      margin-bottom: 0.4rem;
+    }
+    .skull-icon {
+      font-size: 2.8rem;
+      display: inline-block;
+      animation: wobble 3s ease-in-out infinite;
+    }
+    @keyframes wobble {
+      0%,100% { transform: rotate(-4deg); }
+      50%      { transform: rotate(4deg); }
+    }
 
-.input-box input{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:10px;
-    background:#111;
-    color:white;
-    outline:none;
-}
+    /* Site name */
+    .site-name {
+      font-family: 'Creepster', cursive;
+      font-size: 2rem;
+      text-align: center;
+      letter-spacing: 2px;
+      color: var(--glow);
+      text-shadow: 0 0 12px var(--purple), 0 0 30px rgba(123,47,255,0.5);
+      line-height: 1.1;
+    }
+    .site-sub {
+      text-align: center;
+      font-size: 0.72rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.25rem;
+      margin-bottom: 1.8rem;
+    }
 
-.input-box input:focus{
-    box-shadow:0 0 10px #8a2be2;
-}
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 1.6rem;
+      position: relative;
+    }
+    .divider::after {
+      content: '✦';
+      position: absolute;
+      top: -10px; left: 50%;
+      transform: translateX(-50%);
+      color: var(--purple);
+      background: var(--card);
+      padding: 0 8px;
+      font-size: 0.75rem;
+    }
 
-button{
-    width:100%;
-    padding:12px;
-    margin-top:15px;
-    border:none;
-    border-radius:10px;
-    background:#8a2be2;
-    color:white;
-    font-size:16px;
-    cursor:pointer;
-    transition:.3s;
-}
+    /* Form fields */
+    .field { margin-bottom: 1.2rem; }
+    label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
 
-button:hover{
-    transform:scale(1.03);
-    box-shadow:0 0 20px #8a2be2;
-}
+    input {
+      width: 100%;
+      background: #0e0917;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: var(--fog);
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.95rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline: none;
+    }
+    input:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(123,47,255,0.2), 0 0 15px rgba(123,47,255,0.15);
+    }
+    input::placeholder { color: #4a3a60; }
 
-#error{
-    color:#ff4d4d;
-    margin-top:10px;
-    display:none;
-}
+    /* Password note */
+    .pw-note {
+      font-size: 0.68rem;
+      color: #5a4870;
+      margin-top: 0.4rem;
+      display: flex; align-items: center; gap: 5px;
+    }
 
-/* Dashboard */
-#dashboard{
-    display:none;
-    position:absolute;
-    inset:0;
-    background:#050505;
-    color:white;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    text-align:center;
-}
+    /* Error message */
+    .error-msg {
+      background: rgba(192,57,43,0.12);
+      border: 1px solid rgba(192,57,43,0.4);
+      border-radius: 7px;
+      padding: 0.6rem 0.9rem;
+      font-size: 0.8rem;
+      color: #e74c3c;
+      margin-bottom: 1.1rem;
+      display: none;
+      animation: shake 0.4s ease;
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25%      { transform: translateX(-6px); }
+      75%      { transform: translateX(6px); }
+    }
+    .error-msg.visible { display: block; }
 
-#dashboard h1{
-    font-size:45px;
-    text-shadow:0 0 15px #8a2be2;
-}
+    /* Submit button */
+    .btn {
+      width: 100%;
+      padding: 0.85rem;
+      margin-top: 0.5rem;
+      background: linear-gradient(135deg, var(--purple), #4a0e9e);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Creepster', cursive;
+      font-size: 1.15rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s, box-shadow 0.3s;
+      box-shadow: 0 4px 20px rgba(123,47,255,0.4);
+    }
+    .btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, var(--glow), var(--purple));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(179,106,255,0.5); }
+    .btn:hover::before { opacity: 1; }
+    .btn:active { transform: translateY(0); }
+    .btn span { position: relative; z-index: 1; }
 
-#dashboard p{
-    margin-top:10px;
-    color:#ccc;
-}
-</style>
+    /* Success state */
+    .success-overlay {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 1rem 0 0.5rem;
+    }
+    .success-overlay.visible { display: flex; }
+    .success-icon { font-size: 3rem; animation: popIn 0.5s cubic-bezier(.36,1.56,.64,1); }
+    @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .success-text {
+      font-family: 'Creepster', cursive;
+      font-size: 1.4rem;
+      color: var(--glow);
+      text-shadow: 0 0 12px var(--purple);
+      letter-spacing: 1px;
+    }
+    .success-sub { font-size: 0.8rem; color: var(--muted); }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      color: #3a2e50;
+      letter-spacing: 1px;
+    }
+    .footer-note span { color: var(--blood); }
+  </style>
 </head>
-
 <body>
 
-<div class="login-box" id="loginBox">
-
-    <div class="ghost">👻</div>
-
-    <div class="logo">VS Learning Hub</div>
-
-    <div class="tagline">
-        Enter The World Of Knowledge
-    </div>
-
-    <form onsubmit="login(event)">
-
-        <div class="input-box">
-            <input type="email"
-            id="email"
-            placeholder="Enter Email"
-            required>
-        </div>
-
-        <div class="input-box">
-            <input type="password"
-            id="password"
-            placeholder="25082005"
-            required>
-        </div>
-
-        <button type="submit">
-            👻 Enter Hub
-        </button>
-
-        <div id="error">
-            Wrong Password!
-        </div>
-
-    </form>
-
+<!-- Background -->
+<div class="bg" id="bg">
+  <div class="stars" id="stars"></div>
+  <!-- Bats -->
+  <div class="bat" style="--fd:14s;--fy:-40px;top:18%;">🦇</div>
+  <div class="bat" style="--fd:19s;--fy:30px;top:35%;animation-delay:-6s;">🦇</div>
+  <div class="bat" style="--fd:11s;--fy:-20px;top:55%;animation-delay:-3s;">🦇</div>
+  <div class="bat" style="--fd:22s;--fy:50px;top:8%;animation-delay:-10s;">🦇</div>
+  <!-- Fog -->
+  <div class="fog-layer" style="--ff:12s;opacity:0.7;"></div>
+  <div class="fog-layer" style="--ff:18s;animation-delay:-5s;opacity:0.4;height:120px;"></div>
+  <!-- Orbs -->
+  <div class="orb" style="--pd:6s;width:300px;height:300px;background:#4a0080;top:-80px;left:-60px;"></div>
+  <div class="orb" style="--pd:8s;width:250px;height:250px;background:#800030;bottom:-60px;right:-40px;animation-delay:-3s;"></div>
 </div>
 
-<div id="dashboard">
-    <h1>📚 VS Learning Hub</h1>
-    <p>Knowledge Never Sleeps...</p>
+<!-- Card -->
+<div class="wrapper">
+  <div class="card">
+
+    <div class="skull-wrap"><span class="skull-icon">💀</span></div>
+    <div class="site-name">VS Learning Hub</div>
+    <div class="site-sub">Enter if you dare…</div>
+
+    <hr class="divider"/>
+
+    <!-- Login form -->
+    <div id="loginForm">
+      <div class="error-msg" id="errMsg">⚠️ Wrong password! The spirits deny you entry.</div>
+
+      <div class="field">
+        <label>📧 Email Address</label>
+        <input type="email" id="emailInput" placeholder="your@email.com" autocomplete="off"/>
+      </div>
+
+      <div class="field">
+        <label>🔒 Password</label>
+        <input type="password" id="pwInput" placeholder="Enter the secret…" autocomplete="off"/>
+        <div class="pw-note">🕯️ Password is fixed for all users</div>
+      </div>
+
+      <button class="btn" onclick="doLogin()">
+        <span>🕸️ Enter the Darkness</span>
+      </button>
+    </div>
+
+    <!-- Success state -->
+    <div class="success-overlay" id="successBox">
+      <div class="success-icon">🎃</div>
+      <div class="success-text">Welcome, Brave Soul!</div>
+      <div class="success-sub">You have entered VS Learning Hub…</div>
+    </div>
+
+    <div class="footer-note">
+      🕷️ Powered by <span>VS Learning Hub</span> · All souls reserved
+    </div>
+  </div>
 </div>
 
 <script>
+  // ── Generate stars ──
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      top:${Math.random()*100}%;
+      left:${Math.random()*100}%;
+      --d:${(Math.random()*3+1.5).toFixed(1)}s;
+      animation-delay:${(Math.random()*4).toFixed(1)}s;
+    `;
+    starsEl.appendChild(s);
+  }
 
-function login(e){
+  // ── Login logic ──
+  const FIXED_PASSWORD = '25082005';
 
-e.preventDefault();
+  function doLogin() {
+    const email = document.getElementById('emailInput').value.trim();
+    const pw    = document.getElementById('pwInput').value;
+    const err   = document.getElementById('errMsg');
+    const form  = document.getElementById('loginForm');
+    const succ  = document.getElementById('successBox');
 
-let password =
-document.getElementById("password").value;
+    // Basic email check
+    if (!email || !email.includes('@')) {
+      err.textContent = '⚠️ Please enter a valid email address!';
+      err.classList.add('visible');
+      return;
+    }
 
-if(password==="25082005")
+    if (pw !== FIXED_PASSWORD) {
+      err.textContent = '⚠️ Wrong password! The spirits deny you entry.';
+      err.classList.add('visible');
+      document.getElementById('pwInput').value = '';
+      return;
+    }
 
-}
+    // Success
+    err.classList.remove('visible');
+    form.style.display = 'none';
+    succ.classList.add('visible');
 
-}
+    // Persist login state + redirect
+    try {
+      localStorage.setItem('isLoggedIn', 'true');
+    } catch (e) {
+      // ignore
+    }
 
+    // Redirect to hub after short delay so user sees success UI briefly
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 600);
+  }
+
+
+  // Allow Enter key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+
+  // Hide error on typing
+  document.getElementById('pwInput').addEventListener('input', () => {
+    document.getElementById('errMsg').classList.remove('visible');
+  });
 </script>
-
 </body>
 </html>
