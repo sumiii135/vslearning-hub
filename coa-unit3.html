@@ -8,6 +8,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
 </head>
 <body>
+<script>
+  try {
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      window.location.href = 'login.html';
+    }
+  } catch (e) {}
+</script>
 <div class="container">
   <div class="card">
     <h1>COA Unit 3</h1>
