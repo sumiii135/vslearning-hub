@@ -14,27 +14,41 @@
 <div class="ghost" style="top: 70%; left: -80px; animation-delay: 5s;">👻</div>
 
 <header>
-    <a href="login.html" style="position: absolute; top: 20px; right: 20px; color: #38bdf8; text-decoration: none; font-weight: bold; border: 1px solid rgba(56, 189, 248, 0.3); padding: 8px 16px; border-radius: 10px; background: rgba(56, 189, 248, 0.1); backdrop-filter: blur(5px); font-family: 'Creepster', cursive;">Login</a>
+    <a href="login.html" onclick="localStorage.removeItem('isLoggedIn'); localStorage.removeItem('vsCurrentUserName'); localStorage.removeItem('vsCurrentUserEmail');" style="position: absolute; top: 20px; right: 20px; color: #38bdf8; text-decoration: none; font-weight: bold; border: 1px solid rgba(56, 189, 248, 0.3); padding: 8px 16px; border-radius: 10px; background: rgba(56, 189, 248, 0.1); backdrop-filter: blur(5px); font-family: 'Creepster', cursive;">Logout</a>
     <a href="https://t.me/+BkFG4f_Lu9U4YTVl" target="_blank" style="position: absolute; top: 20px; left: 20px; color: #24A1DE; text-decoration: none; font-weight: bold; border: 1px solid rgba(36, 161, 222, 0.3); padding: 8px 16px; border-radius: 10px; background: rgba(36, 161, 222, 0.1); backdrop-filter: blur(5px); font-family: 'Creepster', cursive;">Telegram</a>
-    <div class="logo">VS</div>
+    <a href="index.html" class="logo-link"><div class="logo">VS</div></a>
 
     <h1 class="vibrate">VS Learning Hub</h1>
 
-    <p class="subtitle">
-        <span style="color:#38bdf8">DS</span> • Math 4 • DSTL • COA • Python
-    </p>
+    <p class="subtitle">Math 4 • DSTL • COA • Python</p>
 
     <div class="contact">
         📧 sumiiipandey@gmail.com<br>
         📱 +91 7068664847
     </div>
 </header>
-
 <div class="quote-display">
     <p id="motivational-quote">"Atmaein aapke liye prerna dhoond rahi hain..."</p>
 </div>
 
+<div style="max-width: 1100px; margin: 15px auto 0; padding: 14px 18px; border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 16px; background: rgba(14, 25, 39, 0.72); color: #dfeeff; font-family: 'Raleway', sans-serif;">
+    <div style="font-size: 0.9rem; opacity: 0.85; margin-bottom: 6px;">Current user</div>
+    <div id="currentUserBadge" style="font-size: 1.15rem; font-weight: 700; color: #7dd3fc;">Welcome, Guest</div>
+    <div id="userCountBadge" style="margin-top: 8px; font-size: 0.9rem; opacity: 0.9;">Visitors tracked: 0</div>
+    <div id="userListBadge" style="margin-top: 10px; font-size: 0.85rem; opacity: 0.8;">User list will appear here.</div>
+</div>
+
 <section class="subjects">
+
+<div class="card">
+    <h2>DSTL</h2> 
+    <div class="unit"><a href="dstl-unit1.html" class="unit-link">Unit 1</a></div>
+    <div class="unit"><a href="dstl-unit2.html" class="unit-link">Unit 2</a></div>
+    <div class="unit"><a href="dstl-unit3.html" class="unit-link">Unit 3</a></div>
+    <div class="unit"><a href="dstl-unit4.html" class="unit-link">Unit 4</a></div>
+    <div class="unit"><a href="dstl-unit5.html" class="unit-link">Unit 5</a></div>
+    <a href="dstl-unit1.html" class="btn">Watch Lectures</a>
+</div>
 
 <div class="card">
     <h2>Math 4</h2>
@@ -44,16 +58,6 @@
     <div class="unit"><a href="ab-maths-4-unit4.html" class="unit-link">Unit 4 - All Parts</a></div>
     <div class="unit"><a href="ab-maths-4-unit5.html" class="unit-link">Unit 5 - All Parts</a></div>
     <a href="ab-maths-4-unit1-part1.html" class="btn">Watch Lectures</a>
-</div>
-
-<div class="card">
-    <h2>DSTL</h2>
-    <div class="unit"><a href="dstl-unit1.html" class="unit-link">Unit 1</a></div>
-    <div class="unit"><a href="dstl-unit2.html" class="unit-link">Unit 2</a></div>
-    <div class="unit"><a href="dstl-unit3.html" class="unit-link">Unit 3</a></div>
-    <div class="unit"><a href="dstl-unit4.html" class="unit-link">Unit 4</a></div>
-    <div class="unit"><a href="dstl-unit5.html" class="unit-link">Unit 5</a></div>
-    <a href="dstl-unit1.html" class="btn">Watch Lectures</a>
 </div>
 
 <div class="card">
@@ -82,15 +86,70 @@
     <a href="notes.html" class="btn">Explore Gifts</a>
 </div>
 
+<div class="card">
+    <h2>Timetable</h2>
+    <p class="description" style="font-size: 0.9rem; margin-bottom: 15px;">Yahan se class ka timetable dekhein.</p>
+    <a href="#" class="btn">Open Timetable</a>
+</div>
+
 </section>
 
 <footer>
+    <!-- Interactive Spooky AI Chat Widget -->
+    <button class="ai-launcher" id="aiLauncher">🔮</button>
+    <div class="chat-box" id="chatBox">
+        <div class="chat-header">Spooky Assistant 👻</div>
+        <div class="chat-logs" id="chatLogs">
+            <div class="msg bot">Greetings, mortal! Ask me anything about your subjects (Maths, Python, COA, DSTL) or Notes... 💀</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Ask the spirits...">
+            <button id="sendMsgBtn" style="background: var(--primary); border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; color: black; font-weight: bold;">➔</button>
+        </div>
+    </div>
+
     © 2026 VS Learning Hub | All Rights Reserved<br>
     <a href="https://t.me/+BkFG4f_Lu9U4YTVl" target="_blank" style="color: #38bdf8; text-decoration: none; font-size: 0.85rem; margin-top: 10px; display: inline-block;">Join our Telegram Community 👻</a>
 </footer>
 
 <script>
+    // Simple auth guard (for local static pages)
+    try {
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+    } catch (e) {
+        // if storage blocked, still allow normal page load
+    }
+
+    function getUsers() {
+        try {
+            return JSON.parse(localStorage.getItem('vsLearningUsers') || '[]');
+        } catch (e) {
+            return [];
+        }
+    }
+
+    const currentUserName = localStorage.getItem('vsCurrentUserName') || 'Guest';
+    const currentUserEmail = localStorage.getItem('vsCurrentUserEmail') || '';
+    const users = getUsers();
+    const userBadge = document.getElementById('currentUserBadge');
+    const userCountBadge = document.getElementById('userCountBadge');
+    const userListBadge = document.getElementById('userListBadge');
+
+    if (userBadge) {
+        userBadge.textContent = `Welcome, ${currentUserName}`;
+    }
+    if (userCountBadge) {
+        userCountBadge.textContent = `Visitors tracked: ${users.length}`;
+    }
+    if (userListBadge) {
+        const names = users.slice(0, 6).map(user => user.name);
+        userListBadge.textContent = names.length ? `Recent users: ${names.join(', ')}` : 'User list will appear here.';
+    }
+
     // Daily Motivational Quotes Logic
+
     const quotes = [
         "Safar lamba hai par hosla buland rakh! 🚀",
         "Aaj ki mehnat, kal ki kamyabi hai. ✨",
@@ -106,6 +165,45 @@
 
     const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
     document.getElementById('motivational-quote').innerText = quotes[dayOfYear % quotes.length];
+
+    // Spooky AI Chat Logic
+    const aiLauncher = document.getElementById('aiLauncher');
+    const chatBox = document.getElementById('chatBox');
+    const chatInput = document.getElementById('chatInput');
+    const sendMsgBtn = document.getElementById('sendMsgBtn');
+    const chatLogs = document.getElementById('chatLogs');
+
+    aiLauncher.addEventListener('click', () => {
+        chatBox.style.display = chatBox.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    function appendMessage(text, sender) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `msg ${sender}`;
+        msgDiv.innerText = text;
+        chatLogs.appendChild(msgDiv);
+        chatLogs.scrollTop = chatLogs.scrollHeight;
+    }
+
+    function processReply(input) {
+        const text = input.toLowerCase();
+        if (text.includes('math')) return "Ah, Mathematics 4! A true test of sanity. Click the Math 4 card to conquer probability and complex variables! 📐";
+        if (text.includes('python')) return "Python... the snake language! 🐍 Master loops, lists, and functions before it wraps around you. Check out Unit 1 to 5!";
+        if (text.includes('dstl')) return "Discrete Structures & Theory of Logic! Set theory, relations, and graphs... The spirits suggest starting with Unit 1! 🧠";
+        if (text.includes('coa')) return "Computer Organization & Architecture! Deep dive into pipelines and memory. Don't let cache misses haunt you! 💻";
+        if (text.includes('note') || text.includes('quantum') || text.includes('gift')) return "Looking for sacred texts? 📜 The Gifts section holds all the handwritten notes and Quantums you need to pass!";
+        if (text.includes('hi') || text.includes('hello')) return "Welcome, mortal traveler. State your queries or prepare to be ghosted! 👻";
+        return "The spirits are silent on this matter. Try asking about Maths, Python, COA, DSTL, or Notes! 🔮";
+    }
+
+    sendMsgBtn.addEventListener('click', () => {
+        const msg = chatInput.value.trim();
+        if (!msg) return;
+        appendMessage(msg, 'user');
+        chatInput.value = '';
+        setTimeout(() => appendMessage(processReply(msg), 'bot'), 500);
+    });
+    chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMsgBtn.click(); });
 </script>
 
 </body>
