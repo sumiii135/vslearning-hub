@@ -14,7 +14,7 @@
 <div class="ghost" style="top: 70%; left: -80px; animation-delay: 5s;">👻</div>
 
 <header>
-    <a href="login.html" style="position: absolute; top: 20px; right: 20px; color: #38bdf8; text-decoration: none; font-weight: bold; border: 1px solid rgba(56, 189, 248, 0.3); padding: 8px 16px; border-radius: 10px; background: rgba(56, 189, 248, 0.1); backdrop-filter: blur(5px); font-family: 'Creepster', cursive;">Login</a>
+    <a href="login.html" onclick="localStorage.removeItem('isLoggedIn'); localStorage.removeItem('vsCurrentUserName'); localStorage.removeItem('vsCurrentUserEmail');" style="position: absolute; top: 20px; right: 20px; color: #38bdf8; text-decoration: none; font-weight: bold; border: 1px solid rgba(56, 189, 248, 0.3); padding: 8px 16px; border-radius: 10px; background: rgba(56, 189, 248, 0.1); backdrop-filter: blur(5px); font-family: 'Creepster', cursive;">Logout</a>
     <a href="https://t.me/+BkFG4f_Lu9U4YTVl" target="_blank" style="position: absolute; top: 20px; left: 20px; color: #24A1DE; text-decoration: none; font-weight: bold; border: 1px solid rgba(36, 161, 222, 0.3); padding: 8px 16px; border-radius: 10px; background: rgba(36, 161, 222, 0.1); backdrop-filter: blur(5px); font-family: 'Creepster', cursive;">Telegram</a>
     <a href="index.html" class="logo-link"><div class="logo">VS</div></a>
 
@@ -31,10 +31,17 @@
     <p id="motivational-quote">"Atmaein aapke liye prerna dhoond rahi hain..."</p>
 </div>
 
+<div style="max-width: 1100px; margin: 15px auto 0; padding: 14px 18px; border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 16px; background: rgba(14, 25, 39, 0.72); color: #dfeeff; font-family: 'Raleway', sans-serif;">
+    <div style="font-size: 0.9rem; opacity: 0.85; margin-bottom: 6px;">Current user</div>
+    <div id="currentUserBadge" style="font-size: 1.15rem; font-weight: 700; color: #7dd3fc;">Welcome, Guest</div>
+    <div id="userCountBadge" style="margin-top: 8px; font-size: 0.9rem; opacity: 0.9;">Visitors tracked: 0</div>
+    <div id="userListBadge" style="margin-top: 10px; font-size: 0.85rem; opacity: 0.8;">User list will appear here.</div>
+</div>
+
 <section class="subjects">
 
 <div class="card">
-    <h2>DSTL</h2>
+    <h2>DSTL</h2> 
     <div class="unit"><a href="dstl-unit1.html" class="unit-link">Unit 1</a></div>
     <div class="unit"><a href="dstl-unit2.html" class="unit-link">Unit 2</a></div>
     <div class="unit"><a href="dstl-unit3.html" class="unit-link">Unit 3</a></div>
@@ -82,7 +89,7 @@
 <div class="card">
     <h2>Timetable</h2>
     <p class="description" style="font-size: 0.9rem; margin-bottom: 15px;">Yahan se class ka timetable dekhein.</p>
-    <a href="https://drive.google.com/file/d/1PRQvOwkrvvkKDaeA2svSyH2F8bGLtzqY/view?usp=drivesdk" class="btn" target="_blank">Open Timetable</a>
+    <a href="#" class="btn">Open Timetable</a>
 </div>
 
 </section>
@@ -113,6 +120,32 @@
         }
     } catch (e) {
         // if storage blocked, still allow normal page load
+    }
+
+    function getUsers() {
+        try {
+            return JSON.parse(localStorage.getItem('vsLearningUsers') || '[]');
+        } catch (e) {
+            return [];
+        }
+    }
+
+    const currentUserName = localStorage.getItem('vsCurrentUserName') || 'Guest';
+    const currentUserEmail = localStorage.getItem('vsCurrentUserEmail') || '';
+    const users = getUsers();
+    const userBadge = document.getElementById('currentUserBadge');
+    const userCountBadge = document.getElementById('userCountBadge');
+    const userListBadge = document.getElementById('userListBadge');
+
+    if (userBadge) {
+        userBadge.textContent = `Welcome, ${currentUserName}`;
+    }
+    if (userCountBadge) {
+        userCountBadge.textContent = `Visitors tracked: ${users.length}`;
+    }
+    if (userListBadge) {
+        const names = users.slice(0, 6).map(user => user.name);
+        userListBadge.textContent = names.length ? `Recent users: ${names.join(', ')}` : 'User list will appear here.';
     }
 
     // Daily Motivational Quotes Logic
